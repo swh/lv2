@@ -31,7 +31,8 @@
                 <callback event="activate">                  
                   gt = init_iir_stage(IIR_STAGE_LOWPASS,10,3,2);
                   iirf = init_iirf_t(gt);
-                  chebyshev(iirf, gt, 4),1,10), IIR_STAGE_LOWPASS, 0.25f, 0.5f);
+                  chebyshev(iirf, gt, 2*CLAMP(f_round(*(plugin_data->stages)),1,10), IIR_STAGE_LOWPASS, 
+                            *(plugin_data->cutoff)/(float)sample_rate, 0.5f);
                 </callback>
 
                 <callback event="cleanup">
