@@ -1,0 +1,6 @@
+*.o
+*.so
+plugins/*-swh.lv2/manifest.ttl
+plugins/*-swh.lv2/manifest.ttl.in
+plugins/*-swh.lv2/plugin.c
+plugins/*-swh.lv2/plugin.ttl
