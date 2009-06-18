@@ -6,6 +6,7 @@
 @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 @prefix doap: &lt;http://usefulinc.com/ns/doap#&gt; .
 @prefix swhext: &lt;http://plugin.org.uk/extensions#&gt; .
+@prefix epp: &lt;http://lv2plug.in/ns/dev/extportinfo#&gt; .
 <xsl:for-each select="ladspa/plugin">
 swh:<xsl:value-of select="@label"/> a :Plugin ;
 <xsl:call-template name="csl2type">
@@ -57,11 +58,8 @@ swh:<xsl:value-of select="@label"/> a :Plugin ;
      :default <xsl:value-of select="range/@default"/> ;</xsl:if>
      <xsl:if test="contains(@hint, 'integer')">
      :portProperty :integer ;</xsl:if>
-     <!-- drobilla: :logarithmic does not exist -->
-     <!--
      <xsl:if test="contains(@hint, 'logarithmic')">
-     :portProperty :logarithmic ;</xsl:if>
-     -->
+     :portProperty epp:logarithmic ;</xsl:if>
      <xsl:if test="contains(@hint, 'sample_rate')">
      :portProperty :sampleRate ;</xsl:if>
      <xsl:if test="contains(@hint, 'toggled')">
