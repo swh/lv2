@@ -119,52 +119,52 @@
       plugin_data->hold_count = hold_count;
     ]]></callback>
 
-    <port label="lf_fc" dir="input" type="control" hint="sample_rate,default_minimum">
+    <port label="lf_fc" dir="input" type="control" hint="logarithmic">
       <name>LF key filter (Hz)</name>
       <p>Controls the cutoff of the low frequency filter (highpass).</p>
-      <range min="0.0007" max="0.1"/>
+      <range min="25.0" max="4000.0" default="500.0"/>
     </port>
 
-    <port label="hf_fc" dir="input" type="control" hint="sample_rate,default_maximum">
+    <port label="hf_fc" dir="input" type="control" hint="logarithmic">
       <name>HF key filter (Hz)</name>
       <p>Controls the cutoff of the high frequency filter (lowpass).</p>
-      <range min="0.005" max="0.49"/>
+      <range min="250.0" max="20000.0" default="2000.0"/>
     </port>
 
-    <port label="threshold" dir="input" type="control" hint="default_minimum">
+    <port label="threshold" dir="input" type="control">
       <name>Threshold (dB)</name>
       <p>Controls the level at which the gate will open.</p>
-      <range min="-70" max="+20"/>
+      <range min="-70.0" max="+20.0" default="-40.0"/>
     </port>
 
-    <port label="attack" dir="input" type="control" hint="default_low">
+    <port label="attack" dir="input" type="control" hint="logarithmic">
       <name>Attack (ms)</name>
       <p>Controls the time the gate will take to open fully.</p>
-      <range min="0.01" max="1000"/>
+      <range min="0.01" max="1000.0" default="0.1"/>
     </port>
 
-    <port label="hold" dir="input" type="control" hint="default_high">
+    <port label="hold" dir="input" type="control" hint="logarithmic">
       <name>Hold (ms)</name>
       <p>Controls the minimum time the gate will stay open for.</p>
-      <range min="2" max="2000"/>
+      <range min="2.0" max="2000.0" default="50.0"/>
     </port>
 
-    <port label="decay" dir="input" type="control" hint="default_middle">
+    <port label="decay" dir="input" type="control" hint="logarithmic">
       <name>Decay (ms)</name>
       <p>Controls the time the gate will take to close fully.</p>
-      <range min="2" max="4000"/>
+      <range min="2.0" max="4000.0" default="50.0"/>
     </port>
 
-    <port label="range" dir="input" type="control" hint="default_minimum">
+    <port label="range" dir="input" type="control">
       <name>Range (dB)</name>
       <p>Controls the difference between the gate's open and closed state.</p>
-      <range min="-90" max="0"/>
+      <range min="-90.0" max="0.0" default="-20.0"/>
     </port>
 
-    <port label="select" dir="input" type="control" hint="integer,default_0">
+    <port label="select" dir="input" type="control" hint="integer">
       <name>Output select (-1 = key listen, 0 = gate, 1 = bypass)</name>
       <p>Controls output monitor. -1 is the output of the key filters (so you can check what is being gated on). 0 is the normal, gated output. 1 is bypass mode.</p>
-      <range min="-1" max="1"/>
+      <range min="-1" max="1" default="0"/>
     </port>
 
     <port label="input" dir="input" type="audio">
