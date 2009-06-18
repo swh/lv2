@@ -113,6 +113,8 @@
 	}
       }
 
+      *(plugin_data->level) = CO_DB(env);
+
       plugin_data->env = env;
       plugin_data->gate = gate;
       plugin_data->state = state;
@@ -165,6 +167,12 @@
       <name>Output select (-1 = key listen, 0 = gate, 1 = bypass)</name>
       <p>Controls output monitor. -1 is the output of the key filters (so you can check what is being gated on). 0 is the normal, gated output. 1 is bypass mode.</p>
       <range min="-1" max="1" default="0"/>
+    </port>
+
+    <port label="level" dir="output" type="control">
+      <name>Key level (dB)</name>
+      <p>Shows the current level of the key.</p>
+      <range min="-90.0" max="0.0"/>
     </port>
 
     <port label="input" dir="input" type="audio">
