@@ -59,11 +59,11 @@ gverb: gverb/gverb.c gverb/gverbdsp.c gverb/gverb.o gverb/gverbdsp.o
 util: util/blo.o util/iir.o util/db.o util/rms.o
 
 %.c: OBJ = $(shell echo $@ | sed 's/\.c$$/-@OS@.$(EXT)/')
-%.c: %.xml
+%.c: %.xml xslt/source.xsl xslt/manifest.xsl
 	xsltproc -novalid xslt/source.xsl $*.xml | sed 's/LADSPA_Data/float/g' > $@
 	xsltproc -novalid -stringparam obj `basename $(OBJ)` xslt/manifest.xsl $*.xml > `dirname $@`/manifest.ttl.in
 
-%.ttl: %.xml
+%.ttl: %.xml xslt/turtle.xsl
 	xsltproc -novalid xslt/turtle.xsl $*.xml | sed 's/\\/\\\\/g' > $@
 
 %.o: NAME = $(shell echo -n $@ | sed 's/plugins\/\(.*\)-swh.*/\1/')
