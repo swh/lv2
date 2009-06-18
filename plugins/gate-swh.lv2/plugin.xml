@@ -120,6 +120,16 @@
       }
 
       *(plugin_data->level) = CO_DB(env);
+      switch (state) {
+      case OPEN:
+        *(plugin_data->gate_state) = 1.0;
+        break;
+      case HOLD:
+        *(plugin_data->gate_state) = 0.5;
+        break;
+      default:
+        *(plugin_data->gate_state) = 0.0;
+      }
 
       plugin_data->env = env;
       plugin_data->gate = gate;
@@ -179,6 +189,11 @@
       <name>Key level (dB)</name>
       <p>Shows the current level of the key.</p>
       <range min="-90.0" max="0.0"/>
+    </port>
+
+    <port label="gate_state" dir="output" type="control">
+      <name>Gate state</name>
+      <range min="0.0" max="1.0"/>
     </port>
 
     <port label="input" dir="input" type="audio">
