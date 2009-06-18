@@ -2,6 +2,8 @@
 <!DOCTYPE ladspa SYSTEM "ladspa-swh.dtd">
 <?xml-stylesheet href="ladspa.css" type="text/css"?>
 
+<!-- Copyright (C) 2000 Nedko Arnaudov <nedko@arnaudov.name> -->
+
 <ladspa>
   <global>
     <meta name="maker" value="Steve Harris &lt;steve@plugin.org.uk&gt;"/>
@@ -16,7 +18,8 @@
       #define CLOSED  1
       #define OPENING 2
       #define OPEN    3
-      #define CLOSING 4
+      #define HOLD    4
+      #define CLOSING 5
     ]]></code>
   </global>
 
@@ -83,17 +86,20 @@
 	  if (gate >= 1.0f) {
 	    gate = 1.0f;
 	    state = OPEN;
-	    hold_count = f_round(hold * fs * 0.001f);
-	    plugin_data->hold_count = hold_count;
 	  }
         } else if (state == OPEN) {
-	  if (hold_count <= 0) {
-	    if (env < t_level) {
-	      state = CLOSING;
-            }
-	  } else {
-	    hold_count--;
-	  }
+          if (env < t_level) {
+            state = HOLD;
+            hold_count = f_round(hold * fs * 0.001f);
+          }
+        } else if (state == HOLD) {
+	  if (env >= t_level) {
+	    state = OPEN;
+          } else if (hold_count <= 0) {
+            state = CLOSING;
+          } else {
+            hold_count--;
+          }
 	} else if (state == CLOSING) {
 	  gate -= d_rate;
 	  if (env >= t_level) {
@@ -147,13 +153,13 @@
 
     <port label="hold" dir="input" type="control" hint="logarithmic">
       <name>Hold (ms)</name>
-      <p>Controls the minimum time the gate will stay open for.</p>
+      <p>Controls the amount of time the gate will stay open after the signal falls below Threshold.</p>
       <range min="2.0" max="2000.0" default="50.0"/>
     </port>
 
     <port label="decay" dir="input" type="control" hint="logarithmic">
       <name>Decay (ms)</name>
-      <p>Controls the time the gate will take to close fully.</p>
+      <p>Controls the time the gate will take to close fully, once the signal has fallen below the Threshold and the Hold time has expired.</p>
       <range min="2.0" max="4000.0" default="50.0"/>
     </port>
 
