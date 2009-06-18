@@ -53,6 +53,8 @@ swh:<xsl:value-of select="@label"/> a :Plugin ;
      :default <xsl:value-of select="range/@min"/> ;</xsl:if>
      <xsl:if test="contains(@hint, 'default_maximum')">
      :default <xsl:value-of select="range/@max"/> ;</xsl:if>
+     <xsl:if test="range/@default">
+     :default <xsl:value-of select="range/@default"/> ;</xsl:if>
      <xsl:if test="contains(@hint, 'integer')">
      :portProperty :integer ;</xsl:if>
      <!-- drobilla: :logarithmic does not exist -->
