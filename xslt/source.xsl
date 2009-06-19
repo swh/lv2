@@ -89,6 +89,7 @@ static void init_<xsl:value-of select="$pluginLabel" />()
   <xsl:value-of select="$pluginLabel" />Descriptor->deactivate = <xsl:choose><xsl:when test="callback[@event='deactivate']">deactivate<xsl:value-of select="$PluginLabel" /></xsl:when><xsl:otherwise>NULL</xsl:otherwise></xsl:choose>;
   <xsl:value-of select="$pluginLabel" />Descriptor->instantiate = instantiate<xsl:value-of select="$PluginLabel" />;
   <xsl:value-of select="$pluginLabel" />Descriptor->run = <xsl:choose><xsl:when test="callback[@event='run']">run<xsl:value-of select="$PluginLabel" /></xsl:when><xsl:otherwise>NULL</xsl:otherwise></xsl:choose>;
+  <xsl:value-of select="$pluginLabel" />Descriptor->extension_data = NULL;
 }
 </xsl:for-each>
 
