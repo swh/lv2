@@ -44,8 +44,8 @@ PLUGIN_LDFLAGS = -arch i386 -arch ppc -dynamic -Wl,-syslibroot,/Developer/SDKs/M
 BUILD_PLUGINS = $(PLUGINS)
 else
 EXT = so
-PLUGIN_CFLAGS = -Wall -I. -Iinclude -O3 -fomit-frame-pointer -fstrength-reduce -funroll-loops -fPIC -DPIC $(CFLAGS)
-PLUGIN_LDFLAGS = -shared $(LDFLAGS)
+PLUGIN_CFLAGS = -Wall -I. -Iinclude -O3 -fomit-frame-pointer -fstrength-reduce -funroll-loops -fPIC -DPIC -DFFTW3 $(CFLAGS)
+PLUGIN_LDFLAGS = -shared -lm $(LDFLAGS)
 BUILD_PLUGINS = $(PLUGINS) $(FFT_PLUGINS)
 endif
 
@@ -56,7 +56,7 @@ all: util gverb $(OBJECTS)
 gverb: gverb/gverb.c gverb/gverbdsp.c gverb/gverb.o gverb/gverbdsp.o
 	(cd gverb && make -w CFLAGS="$(PLUGIN_CFLAGS)" LDFLAGS="$(PLUGIN_LDFLAGS)")
 
-util: util/blo.o util/iir.o util/db.o util/rms.o
+util: util/blo.o util/iir.o util/db.o util/rms.o util/pitchscale.o
 
 %.c: OBJ = $(shell echo $@ | sed 's/\.c$$/-@OS@.$(EXT)/')
 %.c: %.xml xslt/source.xsl xslt/manifest.xsl

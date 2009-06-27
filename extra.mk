@@ -1,6 +1,6 @@
-analogue_osc_LDFLAGS = util/blo.o
-fm_osc_LDFLAGS = util/blo.o
-hermes_filter_LDFLAGS = util/blo.o
+analogue_osc_LDFLAGS = util/blo.o -lrt
+fm_osc_LDFLAGS = util/blo.o -lrt
+hermes_filter_LDFLAGS = util/blo.o -lrt
 
 bandpass_iir_LDFLAGS = util/iir.o
 bandpass_a_iir_LDFLAGS = util/iir.o
@@ -21,3 +21,6 @@ se4_LDFLAGS = util/db.o util/rms.o
 
 mbeq_CFLAGS = `pkg-config fftw3f --cflags`
 mbeq_LDFLAGS = `pkg-config fftw3f --libs`
+
+pitch_scale_CFLAGS = `pkg-config fftw3f --cflags`
+pitch_scale_LDFLAGS = util/pitchscale.o `pkg-config fftw3f --libs`
