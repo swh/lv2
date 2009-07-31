@@ -28,9 +28,9 @@
                 </callback>
 
                 <callback event="activate">                  
-                  gt = init_iir_stage(IIR_STAGE_HIGHPASS,10,3,2);
-                  iirf = init_iirf_t(gt);
-                  chebyshev(iirf, gt, 2*CLAMP((int)(*(plugin_data->stages)),1,10), IIR_STAGE_HIGHPASS, *(plugin_data->cutoff)/(float)sample_rate, 0.5f);
+                  plugin_data->gt = init_iir_stage(IIR_STAGE_HIGHPASS,10,3,2);
+                  plugin_data->iirf = init_iirf_t(plugin_data->gt);
+                  chebyshev(plugin_data->iirf, plugin_data->gt, 2*CLAMP((int)(*(plugin_data->stages)),1,10), IIR_STAGE_HIGHPASS, *(plugin_data->cutoff)/(float)sample_rate, 0.5f);
                 </callback>
 
                 <callback event="cleanup">

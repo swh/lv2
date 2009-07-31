@@ -40,11 +40,11 @@
       size = sample_rate * 5 * 2; /* 5 second maximum */
         
       /* calloc sets the buffer to zero. */
-      buffer = calloc(size, sizeof(LADSPA_Data));
+      plugin_data->buffer = calloc(size, sizeof(LADSPA_Data));
 
-      buffer_size = size;
-      write_phase = 0;
-      delay_samples = 0;
+      plugin_data->buffer_size = size;
+      plugin_data->write_phase = 0;
+      plugin_data->delay_samples = 0;
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[

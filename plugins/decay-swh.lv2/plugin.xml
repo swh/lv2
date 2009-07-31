@@ -25,10 +25,10 @@
     ]]></callback>
     
     <callback event="activate"><![CDATA[
-      b = 0.f;
-      y = 0.f;
-      last_decay_time = 0.f;
-      first_time = 0;
+      plugin_data->b = 0.f;
+      plugin_data->y = 0.f;
+      plugin_data->last_decay_time = 0.f;
+      plugin_data->first_time = 0;
     ]]></callback>
     
     <callback event="run"><![CDATA[
@@ -40,7 +40,7 @@
         plugin_data->first_time = 0;
       }
 
-      if (decay_time == last_decay_time) {
+      if (decay_time == plugin_data->last_decay_time) {
         if (b == 0.f)
           for (i=0; i<sample_count; i++)
             out[i] = y = in[i];

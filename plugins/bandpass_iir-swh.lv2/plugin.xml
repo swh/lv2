@@ -32,15 +32,15 @@
                 </callback>
 
                 <callback event="activate">                  
-                  ufc = (*(plugin_data->center) + *(plugin_data->width)*0.5f)/(float)sample_rate;
-                  lfc = (*(plugin_data->center) - *(plugin_data->width)*0.5f)/(float)sample_rate;
-                  first = init_iir_stage(IIR_STAGE_LOWPASS,10,3,2);
-                  second = init_iir_stage(IIR_STAGE_HIGHPASS,10,3,2);                  
-                  gt = init_iir_stage(IIR_STAGE_BANDPASS,20,3,2); 
-                  iirf = init_iirf_t(gt);
-                  chebyshev(iirf, first, 2*CLAMP((int)(*(plugin_data->stages)),1,10), IIR_STAGE_LOWPASS, ufc, 0.5f);
-                  chebyshev(iirf, second, 2*CLAMP((int)(*(plugin_data->stages)),1,10), IIR_STAGE_HIGHPASS, lfc, 0.5f);
-                  combine_iir_stages(IIR_STAGE_BANDPASS, gt, first, second,0,0);
+                  plugin_data->ufc = (*(plugin_data->center) + *(plugin_data->width)*0.5f)/(float)sample_rate;
+                  plugin_data->lfc = (*(plugin_data->center) - *(plugin_data->width)*0.5f)/(float)sample_rate;
+                  plugin_data->first = init_iir_stage(IIR_STAGE_LOWPASS,10,3,2);
+                  plugin_data->second = init_iir_stage(IIR_STAGE_HIGHPASS,10,3,2);                  
+                  plugin_data->gt = init_iir_stage(IIR_STAGE_BANDPASS,20,3,2); 
+                  plugin_data->iirf = init_iirf_t(plugin_data->gt);
+                  chebyshev(plugin_data->iirf, plugin_data->first, 2*CLAMP((int)(*(plugin_data->stages)),1,10), IIR_STAGE_LOWPASS, plugin_data->ufc, 0.5f);
+                  chebyshev(plugin_data->iirf, plugin_data->second, 2*CLAMP((int)(*(plugin_data->stages)),1,10), IIR_STAGE_HIGHPASS, plugin_data->lfc, 0.5f);
+                  combine_iir_stages(IIR_STAGE_BANDPASS, plugin_data->gt, plugin_data->first, plugin_data->second,0,0);
                 </callback>
 
                 <callback event="cleanup">

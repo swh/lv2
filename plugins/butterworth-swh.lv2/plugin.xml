@@ -27,9 +27,9 @@
                 </callback>
 
                 <callback event="activate">                  
-                  gt = init_iir_stage(IIR_STAGE_LOWPASS,1,3,2);
-                  iirf = init_iirf_t(gt);
-                  butterworth_stage(gt, 0, *(plugin_data->cutoff), 
+                  plugin_data->gt = init_iir_stage(IIR_STAGE_LOWPASS,1,3,2);
+                  plugin_data->iirf = init_iirf_t(plugin_data->gt);
+                  butterworth_stage(plugin_data->gt, 0, *(plugin_data->cutoff), 
 		  			   *(plugin_data->resonance), 
 					   sample_rate);
                 </callback>
@@ -81,9 +81,9 @@
                 </callback>
 
                 <callback event="activate">                  
-                  gt = init_iir_stage(IIR_STAGE_LOWPASS,1,3,2);
-                  iirf = init_iirf_t(gt);
-                  butterworth_stage(gt, 0, *(plugin_data->cutoff), 
+                  plugin_data->gt = init_iir_stage(IIR_STAGE_LOWPASS,1,3,2);
+                  plugin_data->iirf = init_iirf_t(plugin_data->gt);
+                  butterworth_stage(plugin_data->gt, 0, *(plugin_data->cutoff), 
 		  			   *(plugin_data->resonance), 
 					   sample_rate);
                 </callback>
@@ -131,9 +131,9 @@
                 </callback>
 
                 <callback event="activate">                  
-                  gt = init_iir_stage(IIR_STAGE_LOWPASS,1,3,2);
-                  iirf = init_iirf_t(gt);
-                  butterworth_stage(gt, 1, *(plugin_data->cutoff), 
+                  plugin_data->gt = init_iir_stage(IIR_STAGE_LOWPASS,1,3,2);
+                  plugin_data->iirf = init_iirf_t(plugin_data->gt);
+                  butterworth_stage(plugin_data->gt, 1, *(plugin_data->cutoff), 
 		  			   *(plugin_data->resonance), 
 					   sample_rate);
                 </callback>

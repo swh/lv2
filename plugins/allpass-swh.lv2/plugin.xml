@@ -58,12 +58,12 @@
       while (size < minsize) size <<= 1;
     
       /* calloc sets the buffer to zero. */
-      buffer = calloc(size, sizeof(float));
-      if (buffer)
-        buffer_mask = size - 1;
+      plugin_data->buffer = calloc(size, sizeof(float));
+      if (plugin_data->buffer)
+        plugin_data->buffer_mask = size - 1;
       else
-        buffer_mask = 0;
-      write_phase = 0;
+        plugin_data->buffer_mask = 0;
+      plugin_data->write_phase = 0;
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[
@@ -82,13 +82,13 @@
         plugin_data->feedback = feedback = calc_feedback (delay_time, decay_time);
       }
       
-      if (delay_time == last_delay_time) {
+      if (delay_time == plugin_data->last_delay_time) {
         long read_phase = write_phase - (long)delay_samples;
         float *readptr = buffer + (read_phase & buffer_mask);
         float *writeptr = buffer + (write_phase & buffer_mask);
         float *lastptr = buffer + buffer_mask + 1;
 
-        if (decay_time == last_decay_time) {
+        if (decay_time == plugin_data->last_decay_time) {
           long remain = sample_count;
 
           while (remain) {
@@ -241,12 +241,12 @@
       while (size < minsize) size <<= 1;
     
       /* calloc sets the buffer to zero. */
-      buffer = calloc(size, sizeof(float));
-      if (buffer)
-        buffer_mask = size - 1;
+      plugin_data->buffer = calloc(size, sizeof(float));
+      if (plugin_data->buffer)
+        plugin_data->buffer_mask = size - 1;
       else
-        buffer_mask = 0;
-      write_phase = 0;
+        plugin_data->buffer_mask = 0;
+      plugin_data->write_phase = 0;
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[
@@ -263,7 +263,7 @@
         plugin_data->feedback = feedback = calc_feedback (delay_time, decay_time);
       }
       
-      if (delay_time == last_delay_time && decay_time == last_decay_time) {
+      if (delay_time == plugin_data->last_delay_time && decay_time == plugin_data->last_decay_time) {
         long idelay_samples = (long)delay_samples;
         float frac = delay_samples - idelay_samples;
 
@@ -379,12 +379,12 @@
       while (size < minsize) size <<= 1;
     
       /* calloc sets the buffer to zero. */
-      buffer = calloc(size, sizeof(float));
-      if (buffer)
-        buffer_mask = size - 1;
+      plugin_data->buffer = calloc(size, sizeof(float));
+      if (plugin_data->buffer)
+        plugin_data->buffer_mask = size - 1;
       else
-        buffer_mask = 0;
-      write_phase = 0;
+        plugin_data->buffer_mask = 0;
+      plugin_data->write_phase = 0;
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[
@@ -401,7 +401,7 @@
         plugin_data->feedback = feedback = calc_feedback (delay_time, decay_time);
       }
       
-      if (delay_time == last_delay_time && decay_time == last_decay_time) {
+      if (delay_time == plugin_data->last_delay_time && decay_time == plugin_data->last_decay_time) {
         long idelay_samples = (long)delay_samples;
         float frac = delay_samples - idelay_samples;
 

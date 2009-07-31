@@ -41,12 +41,12 @@
       while (size < minsize) size <<= 1;
     
       /* calloc sets the buffer to zero. */
-      buffer = calloc(size, sizeof(LADSPA_Data));
-      if (buffer)
-        buffer_mask = size - 1;
+      plugin_data->buffer = calloc(size, sizeof(LADSPA_Data));
+      if (plugin_data->buffer)
+        plugin_data->buffer_mask = size - 1;
       else
-        buffer_mask = 0;
-      write_phase = 0;
+        plugin_data->buffer_mask = 0;
+      plugin_data->write_phase = 0;
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[
@@ -61,7 +61,7 @@
         plugin_data->delay_samples = delay_samples = CALC_DELAY (delay_time);
       }
       
-      if (delay_time == last_delay_time) {
+      if (delay_time == plugin_data->last_delay_time) {
         long read_phase = write_phase - (long)delay_samples;
         LADSPA_Data *readptr = buffer + (read_phase & buffer_mask);
         LADSPA_Data *writeptr = buffer + (write_phase & buffer_mask);
@@ -169,12 +169,12 @@
       while (size < minsize) size <<= 1;
     
       /* calloc sets the buffer to zero. */
-      buffer = calloc(size, sizeof(LADSPA_Data));
-      if (buffer)
-        buffer_mask = size - 1;
+      plugin_data->buffer = calloc(size, sizeof(LADSPA_Data));
+      if (plugin_data->buffer)
+        plugin_data->buffer_mask = size - 1;
       else
-        buffer_mask = 0;
-      write_phase = 0;
+        plugin_data->buffer_mask = 0;
+      plugin_data->write_phase = 0;
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[
@@ -189,7 +189,7 @@
         plugin_data->delay_samples = delay_samples = CALC_DELAY (delay_time);
       }
       
-      if (delay_time == last_delay_time) {
+      if (delay_time == plugin_data->last_delay_time) {
         long idelay_samples = (long)delay_samples;
         LADSPA_Data frac = delay_samples - idelay_samples;
 
@@ -285,12 +285,12 @@
       while (size < minsize) size <<= 1;
     
       /* calloc sets the buffer to zero. */
-      buffer = calloc(size, sizeof(LADSPA_Data));
-      if (buffer)
-        buffer_mask = size - 1;
+      plugin_data->buffer = calloc(size, sizeof(LADSPA_Data));
+      if (plugin_data->buffer)
+        plugin_data->buffer_mask = size - 1;
       else
-        buffer_mask = 0;
-      write_phase = 0;
+        plugin_data->buffer_mask = 0;
+      plugin_data->write_phase = 0;
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[
@@ -305,7 +305,7 @@
         plugin_data->delay_samples = delay_samples = CALC_DELAY (delay_time);
       }
       
-      if (delay_time == last_delay_time) {
+      if (delay_time == plugin_data->last_delay_time) {
         long idelay_samples = (long)delay_samples;
         LADSPA_Data frac = delay_samples - idelay_samples;
 
