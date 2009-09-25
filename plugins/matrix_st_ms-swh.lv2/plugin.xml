@@ -21,17 +21,21 @@
       }
     ]]></callback>
 
-    <port label="left" dir="input" type="audio">
+    <group label="in" type="StereoGroup"/>
+
+    <group label="out" type="MidSideGroup" source="in"/>
+
+    <port label="left" dir="input" type="audio" group="in" role="leftChannel">
       <name>Left</name>
     </port>
-    <port label="right" dir="input" type="audio">
+    <port label="right" dir="input" type="audio" group="in" role="rightChannel">
       <name>Right</name>
     </port>
 
-    <port label="mid" dir="output" type="audio">
+    <port label="mid" dir="output" type="audio" group="out" role="centerChannel">
       <name>Mid</name>
     </port>
-    <port label="side" dir="output" type="audio">
+    <port label="side" dir="output" type="audio" group="out" role="sideChannel">
       <name>Side</name>
     </port>
   </plugin>

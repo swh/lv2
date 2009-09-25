@@ -33,20 +33,24 @@ zm1-swh.lv2
 
 FFT_PLUGINS = mbeq-swh.lv2 pitch_scale-swh.lv2
 
+analogue_osc_LDFLAGS = util/blo.o
+
 DARWIN := $(shell uname | grep Darwin)
 OS := $(shell uname -s)
 
 ifdef DARWIN
 EXT = so
 CC = gcc
-PLUGIN_CFLAGS = -Wall -I. -Iinclude -O3 -fomit-frame-pointer -fstrength-reduce -funroll-loops -fPIC -DPIC -arch i386 -arch ppc -ffast-math -msse -fno-common -flat_namespace -bundle -isysroot /Developer/SDKs/MacOSX10.4u.sdk -arch ppc $(CFLAGS)
-PLUGIN_LDFLAGS = -arch i386 -arch ppc -dynamic -Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -bundle -multiply_defined suppress -lc $(LDFLAGS)
-BUILD_PLUGINS = $(PLUGINS)
+PLUGIN_CFLAGS = -Wall -I. -Iinclude -I/usr/local/include -O3 -fomit-frame-pointer -fstrength-reduce -funroll-loops -fPIC -DPIC -DFFTW3 -arch i386 -ffast-math -msse -fno-common -flat_namespace -bundle -isysroot /Developer/SDKs/MacOSX10.4u.sdk $(CFLAGS)
+PLUGIN_LDFLAGS = -arch i386 -dynamic -Wl,-syslibroot,/Developer/SDKs/MacOSX10.5u.sdk -bundle -multiply_defined suppress -lc $(LDFLAGS)
+BUILD_PLUGINS = $(PLUGINS) $(FFT_PLUGINS)
+RT =
 else
 EXT = so
 PLUGIN_CFLAGS = -Wall -I. -Iinclude -O3 -fomit-frame-pointer -fstrength-reduce -funroll-loops -fPIC -DPIC -DFFTW3 $(CFLAGS)
 PLUGIN_LDFLAGS = -shared -lm $(LDFLAGS)
 BUILD_PLUGINS = $(PLUGINS) $(FFT_PLUGINS)
+RT = -lrt
 endif
 
 OBJECTS = $(shell echo $(BUILD_PLUGINS) | sed 's/\([^ ]*\.lv2\)/plugins\/\1\/plugin.$(EXT)/g')
@@ -70,7 +74,7 @@ util: util/blo.o util/iir.o util/db.o util/rms.o util/pitchscale.o
 %.o: %.c
 	$(CC) $(PLUGIN_CFLAGS) $($(NAME)_CFLAGS) $*.c -c -o $@
 
-%.so: NAME = $(shell echo -n $@ | sed 's/plugins\/\(.*\)-swh.*/\1/')
+%.so: NAME = $(shell echo $@ | sed 's/plugins\/\(.*\)-swh.*/\1/')
 %.so: %.xml %.o %.ttl
 	$(CC) $*.o $(PLUGIN_LDFLAGS) $($(NAME)_LDFLAGS) -o $@
 	cp $@ $*-$(OS).$(EXT)

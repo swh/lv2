@@ -198,19 +198,22 @@
       <range min="0" max="1"/>
     </port>
 
-    <port label="in_l" dir="input" type="audio">
+    <group label="main_in" type="StereoGroup"/>
+    <group label="main_out" type="StereoGroup"/>
+
+    <port label="in_l" dir="input" type="audio" group="main_in" role="leftChannel">
       <name>L input</name>
     </port>
 
-    <port label="in_r" dir="input" type="audio">
+    <port label="in_r" dir="input" type="audio" group="main_in" role="rightChannel">
       <name>R input</name>
     </port>
 
-    <port label="out_l" dir="output" type="audio">
+    <port label="out_l" dir="output" type="audio" group="main_out" role="leftChannel">
       <name>L output</name>
     </port>
 
-    <port label="out_r" dir="output" type="audio">
+    <port label="out_r" dir="output" type="audio" group="main_out" role="rightChannel">
       <name>R output</name>
     </port>
 

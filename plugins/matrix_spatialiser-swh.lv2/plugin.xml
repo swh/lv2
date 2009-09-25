@@ -142,10 +142,13 @@
 	plugin_data->current_s_gain = current_s_gain;
     ]]></callback>
 
-    <port label="i_left" dir="input" type="audio">
+    <group label="main_in" type="StereoGroup"/>
+    <group label="main_out" type="StereoGroup"/>
+
+    <port label="i_left" dir="input" type="audio" group="main_in" role="leftChannel">
       <name>Input L</name>
     </port>
-    <port label="i_right" dir="input" type="audio">
+    <port label="i_right" dir="input" type="audio" group="main_in" role="rightChannel">
       <name>Input R</name>
     </port>
     <port label="width" dir="input" type="control" hint="integer,default_0">
@@ -158,10 +161,12 @@
        ]]></p>
      </port>
 
-    <port label="o_left" dir="output" type="audio">
+
+
+    <port label="o_left" dir="output" type="audio" group="main_out" role="leftChannel">
       <name>Output L</name>
     </port>
-    <port label="o_right" dir="output" type="audio">
+    <port label="o_right" dir="output" type="audio" group="main_out" role="rightChannel">
       <name>Output R</name>
     </port>
 

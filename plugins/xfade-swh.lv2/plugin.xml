@@ -34,24 +34,30 @@ means that it is just the B input.</p>
       <range min="-1" max="1"/>
     </port>
 
-    <port label="inputLA" dir="input" type="audio">
+    <group label="in1" type="StereoGroup"/>
+
+    <group label="in2" type="StereoGroup"/>
+
+    <port label="inputLA" dir="input" type="audio" group="in1" role="leftChannel">
       <name>Input A left</name>
     </port>
-    <port label="inputRA" dir="input" type="audio">
+    <port label="inputRA" dir="input" type="audio" group="in1" role="rightChannel">
       <name>Input A right</name>
     </port>
 
-    <port label="inputLB" dir="input" type="audio">
+    <port label="inputLB" dir="input" type="audio" group="in2" role="leftChannel">
       <name>Input B left</name>
     </port>
-    <port label="inputRB" dir="input" type="audio">
+    <port label="inputRB" dir="input" type="audio" group="in2" role="rightChannel">
       <name>Input B right</name>
     </port>
 
-    <port label="outputL" dir="output" type="audio">
+    <group label="out" type="StereoGroup"/>
+
+    <port label="outputL" dir="output" type="audio" group="out" role="leftChannel">
       <name>Output left</name>
     </port>
-    <port label="outputR" dir="output" type="audio">
+    <port label="outputR" dir="output" type="audio" group="out" role="rightChannel">
       <name>Output right</name>
     </port>
   </plugin>

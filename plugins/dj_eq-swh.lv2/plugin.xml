@@ -140,6 +140,9 @@ filters = calloc(BANDS * 2, sizeof(biquad));
       *(plugin_data->latency) = 3; //XXX is this right?
     ]]></callback>
 
+    <group label="main_in" type="StereoGroup"/>
+    <group label="main_out" type="StereoGroup"/>
+
     <port label="lo" dir="input" type="control" hint="default_0">
       <name>Lo gain (dB)</name>
       <p>Controls the gain of the low (100Hz) peak/dip band</p>
@@ -158,18 +161,18 @@ filters = calloc(BANDS * 2, sizeof(biquad));
       <range min="-70" max="+6"/>
     </port>
 
-    <port label="left_input" dir="input" type="audio">
+    <port label="left_input" dir="input" type="audio" group="main_in" role="leftChannel">
       <name>Input L</name>
     </port>
-    <port label="right_input" dir="input" type="audio">
+    <port label="right_input" dir="input" type="audio" group="main_in" role="rightChannel">
       <name>Input R</name>
     </port>
 
-    <port label="left_output" dir="output" type="audio">
+    <port label="left_output" dir="output" type="audio" group="main_out" role="leftChannel">
       <name>Output L</name>
     </port>
 
-    <port label="right_output" dir="output" type="audio">
+    <port label="right_output" dir="output" type="audio" group="main_out" role="rightChannel">
       <name>Output R</name>
     </port>
 

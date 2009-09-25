@@ -27,17 +27,21 @@
       <range min="0" max="2" />
     </port>
 
-    <port label="mid" dir="input" type="audio">
+    <group label="in" type="MidSideGroup"/>
+
+    <port label="mid" dir="input" type="audio" group="in" role="centerChannel">
       <name>Mid</name>
     </port>
-    <port label="side" dir="input" type="audio">
+    <port label="side" dir="input" type="audio" group="in" role="sideChannel">
       <name>Side</name>
     </port>
 
-    <port label="left" dir="output" type="audio">
+    <group label="out" type="StereoGroup" source="in"/>
+
+    <port label="left" dir="output" type="audio" group="out" role="leftChannel">
       <name>Left</name>
     </port>
-    <port label="right" dir="output" type="audio">
+    <port label="right" dir="output" type="audio" group="out" role="rightChannel">
       <name>Right</name>
     </port>
   </plugin>

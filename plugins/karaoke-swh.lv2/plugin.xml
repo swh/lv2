@@ -33,19 +33,22 @@
       <range min="-70" max="0"/>
     </port>
 
-    <port label="lin" dir="input" type="audio">
+    <group label="main_in" type="StereoGroup"/>
+    <group label="main_out" type="StereoGroup"/>
+
+    <port label="lin" dir="input" type="audio" group="main_in" role="leftChannel">
       <name>Left in</name>
     </port>
 
-    <port label="rin" dir="input" type="audio">
+    <port label="rin" dir="input" type="audio" group="main_in" role="rightChannel">
       <name>Right in</name>
     </port>
 
-    <port label="lout" dir="output" type="audio">
+    <port label="lout" dir="output" type="audio" group="main_out" role="leftChannel">
       <name>Left out</name>
     </port>
 
-    <port label="rout" dir="output" type="audio">
+    <port label="rout" dir="output" type="audio" group="main_out" role="rightChannel">
       <name>Right out</name>
     </port>
   </plugin>

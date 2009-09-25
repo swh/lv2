@@ -6,9 +6,21 @@
 @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 @prefix doap: &lt;http://usefulinc.com/ns/doap#&gt; .
 @prefix swhext: &lt;http://plugin.org.uk/extensions#&gt; .
+@prefix pg: &lt;http://lv2plug.in/ns/dev/port-groups#&gt; .
 @prefix epp: &lt;http://lv2plug.in/ns/dev/extportinfo#&gt; .
 <xsl:for-each select="ladspa/plugin">
-swh:<xsl:value-of select="@label"/> a :Plugin ;
+  <xsl:variable name="pluglabel" select="@label"/>
+  <xsl:for-each select="group">
+    <xsl:variable name="grouplabel" select="@label"/>
+    <xsl:variable name="groupuri">
+      <xsl:value-of select="$pluglabel"/>-<xsl:value-of select="$grouplabel"/>
+    </xsl:variable>
+swh:<xsl:value-of select="$groupuri"/> a pg:Group ;
+   a pg:<xsl:value-of select="@type"/> ;
+   :symbol "<xsl:value-of select="$grouplabel"/>"<xsl:if test="@source"> ;
+   pg:source swh:<xsl:value-of select="$pluglabel"/>-<xsl:value-of select="@source"/></xsl:if> .
+  </xsl:for-each>
+swh:<xsl:value-of select="$pluglabel"/> a :Plugin ;
 <xsl:call-template name="csl2type">
      <xsl:with-param name="in" select="@class"/>
    </xsl:call-template>
@@ -23,7 +35,8 @@ swh:<xsl:value-of select="@label"/> a :Plugin ;
 <!--   <xsl:if test="p">swhext:documentation """<xsl:value-of select="p"/>""" ;
   </xsl:if>-->
   <xsl:for-each select="/ladspa/global/meta">
-    <xsl:if test="@name = 'properties' and @value = 'HARD_RT_CAPABLE'">:pluginProperty :hardRtCapable ;
+      <xsl:if test="@name = 'properties' and @value = 'HARD_RT_CAPABLE'">
+   :pluginProperty :hardRtCapable ;
     </xsl:if>
   </xsl:for-each>
   <xsl:for-each select="port">
@@ -64,6 +77,9 @@ swh:<xsl:value-of select="@label"/> a :Plugin ;
      :portProperty :sampleRate ;</xsl:if>
      <xsl:if test="contains(@hint, 'toggled')">
      :portProperty :toggled ;</xsl:if>
+     <xsl:if test="@group">
+     pg:inGroup swh:<xsl:value-of select="$pluglabel"/>-<xsl:value-of select="@group"/> ;
+     pg:role pg:<xsl:value-of select="@role"/> ;</xsl:if>
 <!--     <xsl:if test="p">
      swhext:documentation """<xsl:value-of select="p"/>""" ;</xsl:if>-->
    ] ;

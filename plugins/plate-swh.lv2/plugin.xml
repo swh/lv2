@@ -109,15 +109,19 @@
       <range min="0" max="1"/>
     </port>
 
-    <port label="input" dir="input" type="audio">
+    <group label="in" type="MonoGroup"/>
+
+    <group label="out" type="StereoGroup" source="in"/>
+
+    <port label="input" dir="input" type="audio" group="in" role="centerChannel">
       <name>Input</name>
     </port>
 
-    <port label="outputl" dir="output" type="audio">
+    <port label="outputl" dir="output" type="audio" group="out" role="leftChannel">
       <name>Left output</name>
     </port>
 
-    <port label="outputr" dir="output" type="audio">
+    <port label="outputr" dir="output" type="audio" group="out" role="leftChannel">
       <name>Right output</name>
     </port>
 

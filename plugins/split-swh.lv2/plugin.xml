@@ -23,17 +23,21 @@
 			}
 		</callback>
 
-		<port label="input" dir="input" type="audio">
+        <group label="in" type="MonoGroup"/>
+
+        <group label="out" type="StereoGroup" source="in"/>
+
+		<port label="input" dir="input" type="audio" group="in" role="centerChannel">
 			<name>Input</name>
 			<range min="-1" max="+1"/>
 		</port>
 
-		<port label="out2" dir="output" type="audio">
+		<port label="out2" dir="output" type="audio" group="out" role="leftChannel">
 			<name>Output 1</name>
 			<range min="-1" max="+1"/>
 		</port>
 
-		<port label="out1" dir="output" type="audio">
+		<port label="out1" dir="output" type="audio" group="out" role="rightChannel">
 			<name>Output 2</name>
 			<range min="-1" max="+1"/>
 		</port>

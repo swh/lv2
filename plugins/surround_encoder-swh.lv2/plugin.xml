@@ -111,33 +111,37 @@ static float xcoeffs[] = {
       plugin_data->buffer_pos = buffer_pos;
     ]]></callback>
 
-    <port label="l" dir="input" type="audio">
+    <port label="l" dir="input" type="audio" group="in" role="leftChannel">
       <name>L</name>
       <p>Left channel input. Can be treated as per normal stereo recoding, except that the speaker should be at -22.5$^\circ$, rather than the normal stereo -30$^\circ$.</p>
     </port>
 
-    <port label="r" dir="input" type="audio">
+    <group label="in" type="FourPointZeroGroup"/>
+
+    <port label="r" dir="input" type="audio" group="in" role="rightChannel">
       <name>R</name>
       <p>Right channel input. As per left channel.</p>
     </port>
 
-    <port label="c" dir="input" type="audio">
+    <port label="c" dir="input" type="audio" group="in" role="centerChannel">
       <name>C</name>
       <p>Center channel input. Will be directly in front of the listener, stereo and mono compatible.</p>
     </port>
 
-    <port label="s" dir="input" type="audio">
+    <port label="s" dir="input" type="audio" group="in" role="rearCenterChannel">
       <name>S</name>
       <p>Surround channel. Should sound from the rear speakers, may also leak into the left and right. Has slight delay and bandwidth reduction (cut below 100 Hz, and above 7 KHz) for leakage and noise reduction and enhanced psychoacoustic effects.</p>
 
       <p>Not mono compatible.</p>
     </port>
 
-    <port label="lt" dir="output" type="audio">
+    <group label="out" type="StereoGroup" encoded-type="FourPointZeroGroup" source="in"/>
+
+    <port label="lt" dir="output" type="audio" group="out" role="leftChannel">
       <name>Lt</name>
     </port>
 
-    <port label="rt" dir="output" type="audio">
+    <port label="rt" dir="output" type="audio" group="out" role="rightChannel">
       <name>Rt</name>
     </port>
 

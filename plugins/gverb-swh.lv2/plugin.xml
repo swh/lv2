@@ -120,15 +120,19 @@ Comments and suggestions should be mailed to Juhana Sadeharju
       <range min="-70" max="0"/>
     </port>
 
-    <port label="input" dir="input" type="audio">
+    <group label="in" type="MonoGroup"/>
+
+    <port label="input" dir="input" type="audio" group="in" role="centerChannel">
       <name>Input</name>
     </port>
 
-    <port label="outl" dir="output" type="audio">
+    <group label="out" type="StereoGroup" source="in"/>
+
+    <port label="outl" dir="output" type="audio" group="out" role="leftChannel">
       <name>Left output</name>
     </port>
 
-    <port label="outr" dir="output" type="audio">
+    <port label="outr" dir="output" type="audio" group="out" role="rightChannel">
       <name>Right output</name>
     </port>
 

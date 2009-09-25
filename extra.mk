@@ -1,6 +1,6 @@
-analogue_osc_LDFLAGS = util/blo.o -lrt
-fm_osc_LDFLAGS = util/blo.o -lrt
-hermes_filter_LDFLAGS = util/blo.o -lrt
+analogue_osc_LDFLAGS = util/blo.o $(RT)
+fm_osc_LDFLAGS = util/blo.o $(RT)
+hermes_filter_LDFLAGS = util/blo.o $(RT)
 
 bandpass_iir_LDFLAGS = util/iir.o
 bandpass_a_iir_LDFLAGS = util/iir.o

@@ -165,19 +165,22 @@
       <range min="0" max="+24"/>
     </port>
 
-    <port label="left_in" dir="input" type="audio">
+    <group label="main_in" type="StereoGroup"/>
+    <group label="main_out" type="StereoGroup"/>
+
+    <port label="left_in" dir="input" type="audio" group="main_in" role="leftChannel">
       <name>Left input</name>
     </port>
 
-    <port label="right_in" dir="input" type="audio">
+    <port label="right_in" dir="input" type="audio" group="main_in" role="rightChannel">
       <name>Right input</name>
     </port>
 
-    <port label="left_out" dir="output" type="audio">
+    <port label="left_out" dir="output" type="audio" group="main_out" role="leftChannel">
       <name>Left output</name>
     </port>
 
-    <port label="right_out" dir="output" type="audio">
+    <port label="right_out" dir="output" type="audio" group="main_out" role="rightChannel">
       <name>Right output</name>
     </port>
 
