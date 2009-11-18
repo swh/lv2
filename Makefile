@@ -3,8 +3,6 @@ INSTALL_DIR = $(PREFIX)/lib/lv2
 
 VERSION = 1.0.15
 
-include extra.mk
-
 PLUGINS = alias-swh.lv2 allpass-swh.lv2 am_pitchshift-swh.lv2 amp-swh.lv2 \
 analogue_osc-swh.lv2 bandpass_a_iir-swh.lv2 bandpass_iir-swh.lv2 \
 bode_shifter-swh.lv2 bode_shifter_cv-swh.lv2 butterworth-swh.lv2 \
@@ -33,7 +31,6 @@ zm1-swh.lv2
 
 FFT_PLUGINS = mbeq-swh.lv2 pitch_scale-swh.lv2
 
-analogue_osc_LDFLAGS = util/blo.o
 
 DARWIN := $(shell uname | grep Darwin)
 OS := $(shell uname -s)
@@ -52,6 +49,9 @@ PLUGIN_LDFLAGS = -shared -lm $(LDFLAGS)
 BUILD_PLUGINS = $(PLUGINS) $(FFT_PLUGINS)
 RT = -lrt
 endif
+
+# Load plugin specific flags:
+include extra.mk
 
 OBJECTS = $(shell echo $(BUILD_PLUGINS) | sed 's/\([^ ]*\.lv2\)/plugins\/\1\/plugin.$(EXT)/g')
 
