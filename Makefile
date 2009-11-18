@@ -100,13 +100,14 @@ install-user: all install-really
 install-really:
 	for plugin in $(BUILD_PLUGINS); do \
 		echo Installing $$plugin; \
-		install -d $(INSTALL_DIR_REALLY)/$$plugin; \
-		install plugins/$$plugin/*-$(OS).$(EXT) plugins/$$plugin/*.ttl $(INSTALL_DIR_REALLY)/$$plugin/ ; \
+		install -pd $(INSTALL_DIR_REALLY)/$$plugin; \
+		install -pm 755 plugins/$$plugin/*-$(OS).$(EXT) $(INSTALL_DIR_REALLY)/$$plugin/ ; \
+		install -pm 644 plugins/$$plugin/*.ttl $(INSTALL_DIR_REALLY)/$$plugin/ ; \
 	done
 
 dist: real-clean all dist-clean
 	cd .. && \
-	cp -r lv2 swh-lv2-$(VERSION) && \
+	cp -pr lv2 swh-lv2-$(VERSION) && \
 	tar cfz swh-lv2-$(VERSION).tar.gz swh-lv2-$(VERSION)/{Makefile,README,*.mk,plugins/*/*,util/*,gverb/*,xslt/*,include/*} && \
 	rm -rf swh-lv2-$(VERSION)
 	mv ../swh-lv2-$(VERSION).tar.gz .
