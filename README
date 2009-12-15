@@ -2,6 +2,10 @@ SWH LV2 plugins
 
 http://plugin.org.uk/
 
+LICENCE
+
+This plugins are licensed under the GNU GPL version 3. See the file COPYING for details.
+
 STATUS
 
 This is an early experimental port of my LADSPA plugins to the LV2
@@ -16,7 +20,7 @@ Windows: run "make real-clean all" (untested, might wrk, might not)
 INSTALL
 
 run "make install-system" if you want the plugins installed globally, requires
-root priviledges, or "make install-user" if you want them just installed for
+root privileges, or "make install-user" if you want them just installed for
 the current user.
 
 BUG REPORTS
@@ -26,5 +30,6 @@ Please report bugs to Steve Harris at steve at plugin.org.uk.
 EDITING
 
 If you wish to edit the source code (.xml files in the subdirectories of the
-plugin direcotry) then you will need xsltproc installed. It's in the libxslt
-package, which is part of gnome, I think.
+plugin directory) then you will need xsltproc installed. It's in the libxslt
+package, which is part of gnome, I think. Do not edit the .c files, and do not
+send patches against the .c files.
