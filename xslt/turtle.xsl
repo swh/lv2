@@ -6,7 +6,7 @@
 @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 @prefix doap: &lt;http://usefulinc.com/ns/doap#&gt; .
 @prefix swhext: &lt;http://plugin.org.uk/extensions#&gt; .
-@prefix pg: &lt;http://lv2plug.in/ns/dev/port-groups#&gt; .
+@prefix pg: &lt;http://lv2plug.in/ns/ext/port-groups#&gt; .
 @prefix epp: &lt;http://lv2plug.in/ns/dev/extportinfo#&gt; .
 <xsl:for-each select="ladspa/plugin">
   <xsl:variable name="pluglabel" select="@label"/>
