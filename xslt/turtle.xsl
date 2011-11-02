@@ -7,7 +7,7 @@
 @prefix doap: &lt;http://usefulinc.com/ns/doap#&gt; .
 @prefix swhext: &lt;http://plugin.org.uk/extensions#&gt; .
 @prefix pg: &lt;http://lv2plug.in/ns/ext/port-groups#&gt; .
-@prefix epp: &lt;http://lv2plug.in/ns/dev/extportinfo#&gt; .
+@prefix pprops: &lt;http://lv2plug.in/ns/ext/port-props#&gt; .
 <xsl:for-each select="ladspa/plugin">
   <xsl:variable name="pluglabel" select="@label"/>
   <xsl:for-each select="group">
@@ -72,7 +72,7 @@ swh:<xsl:value-of select="$pluglabel"/> a :Plugin ;
      <xsl:if test="contains(@hint, 'integer')">
      :portProperty :integer ;</xsl:if>
      <xsl:if test="contains(@hint, 'logarithmic')">
-     :portProperty epp:logarithmic ;</xsl:if>
+     :portProperty pprops:logarithmic ;</xsl:if>
      <xsl:if test="contains(@hint, 'sample_rate')">
      :portProperty :sampleRate ;</xsl:if>
      <xsl:if test="contains(@hint, 'toggled')">
