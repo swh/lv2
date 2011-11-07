@@ -12,7 +12,6 @@
 #include &lt;math.h&gt;
 #include &lt;stdlib.h&gt;
 #include "lv2.h"
-static LV2_Descriptor *<xsl:value-of select="$pluginLabel"/>Descriptor = NULL;
 
 typedef struct _<xsl:value-of select="$PluginLabel"/> {
 <xsl:for-each select="port">  float *<xsl:value-of select="@label"/>;
@@ -78,29 +77,24 @@ static void run<xsl:value-of select="$PluginLabel"/>(LV2_Handle instance, uint32
 <xsl:value-of select="callback[@event='run']" />
 }
 
-static void init_<xsl:value-of select="$pluginLabel" />()
-{
-  <xsl:value-of select="$pluginLabel" />Descriptor = (LV2_Descriptor *)malloc(sizeof(LV2_Descriptor));
-
-  <xsl:value-of select="$pluginLabel" />Descriptor->URI = "http://plugin.org.uk/swh-plugins/<xsl:value-of select="$pluginLabel" />";
-  <xsl:value-of select="$pluginLabel" />Descriptor->activate = <xsl:choose><xsl:when test="callback[@event='activate']">activate<xsl:value-of select="$PluginLabel" /></xsl:when><xsl:otherwise>NULL</xsl:otherwise></xsl:choose>;
-  <xsl:value-of select="$pluginLabel" />Descriptor->cleanup = cleanup<xsl:value-of select="$PluginLabel" />;
-  <xsl:value-of select="$pluginLabel" />Descriptor->connect_port = connectPort<xsl:value-of select="$PluginLabel" />;
-  <xsl:value-of select="$pluginLabel" />Descriptor->deactivate = <xsl:choose><xsl:when test="callback[@event='deactivate']">deactivate<xsl:value-of select="$PluginLabel" /></xsl:when><xsl:otherwise>NULL</xsl:otherwise></xsl:choose>;
-  <xsl:value-of select="$pluginLabel" />Descriptor->instantiate = instantiate<xsl:value-of select="$PluginLabel" />;
-  <xsl:value-of select="$pluginLabel" />Descriptor->run = <xsl:choose><xsl:when test="callback[@event='run']">run<xsl:value-of select="$PluginLabel" /></xsl:when><xsl:otherwise>NULL</xsl:otherwise></xsl:choose>;
-  <xsl:value-of select="$pluginLabel" />Descriptor->extension_data = NULL;
-}
+static const LV2_Descriptor <xsl:value-of select="$pluginLabel"/>Descriptor = {
+  "http://plugin.org.uk/swh-plugins/<xsl:value-of select="$pluginLabel" />",
+  instantiate<xsl:value-of select="$PluginLabel" />,
+  connectPort<xsl:value-of select="$PluginLabel" />,
+  <xsl:choose><xsl:when test="callback[@event='activate']">activate<xsl:value-of select="$PluginLabel" /></xsl:when><xsl:otherwise>NULL</xsl:otherwise></xsl:choose>,
+  <xsl:choose><xsl:when test="callback[@event='run']">run<xsl:value-of select="$PluginLabel" /></xsl:when><xsl:otherwise>NULL</xsl:otherwise></xsl:choose>,
+  <xsl:choose><xsl:when test="callback[@event='deactivate']">deactivate<xsl:value-of select="$PluginLabel" /></xsl:when><xsl:otherwise>NULL</xsl:otherwise></xsl:choose>,
+  cleanup<xsl:value-of select="$PluginLabel" />,
+  NULL
+};
 </xsl:for-each>
 
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor *lv2_descriptor(uint32_t index)
 {
-<xsl:for-each select="ladspa/plugin">  if (!<xsl:value-of select="@label" />Descriptor) init_<xsl:value-of select="@label" />();
-</xsl:for-each>
   switch (index) {
 <xsl:for-each select="ladspa/plugin">  case <xsl:number value="position()-1" format="1" />:
-    return <xsl:value-of select="@label" />Descriptor;
+    return &amp;<xsl:value-of select="@label" />Descriptor;
 </xsl:for-each>  default:
     return NULL;
   }
