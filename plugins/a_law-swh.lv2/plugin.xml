@@ -12,7 +12,7 @@
     </code>
   </global>
 
-  <plugin label="alaw" id="2001" class="DynamicsPlugin">
+  <plugin label="alaw" id="4701" class="DynamicsPlugin">
     <name>A-Law Compressor</name>
     <p>Transforms the input signal according to the
        <a href="http://en.wikipedia.org/wiki/A-law_algorithm">A-law</a>
