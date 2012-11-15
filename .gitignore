@@ -1,5 +1,6 @@
 *.o
 *.so
+*.dylib
 plugins/*-swh.lv2/manifest.ttl
 plugins/*-swh.lv2/manifest.ttl.in
 plugins/*-swh.lv2/plugin.c
