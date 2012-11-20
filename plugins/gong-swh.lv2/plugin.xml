@@ -10,6 +10,9 @@
     <code>
       #include "util/waveguide_nl.h"
 
+      /* required for clang compilation */
+      void waveguide_nl_process(waveguide_nl *wg, float in0, float in1, float *out0, float *out1);
+
       #define RUN_WG(n, junct_a, junct_b) waveguide_nl_process(w[n], junct_a - out[n*2+1], junct_b - out[n*2], out+n*2, out+n*2+1)
     </code>
   </global>

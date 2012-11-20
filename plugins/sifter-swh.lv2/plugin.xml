@@ -13,6 +13,9 @@
 
 inline int partition(LADSPA_Data array[], int left, int right);
 
+/* required for clang compilation */
+void q_sort(LADSPA_Data array[], int left, int right);
+
 inline void q_sort(LADSPA_Data array[], int left, int right) {
 	float pivot = partition(array, left, right);
 

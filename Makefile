@@ -36,10 +36,10 @@ DARWIN := $(shell uname | grep Darwin)
 OS := $(shell uname -s)
 
 ifdef DARWIN
-EXT = so
-CC = gcc
-PLUGIN_CFLAGS = -Wall -I. -Iinclude -I/usr/local/include -O3 -fomit-frame-pointer -fstrength-reduce -funroll-loops -fPIC -DPIC -DFFTW3 -arch i386 -ffast-math -msse -fno-common -flat_namespace -bundle -isysroot /Developer/SDKs/MacOSX10.4u.sdk $(CFLAGS)
-PLUGIN_LDFLAGS = -arch i386 -dynamic -Wl,-syslibroot,/Developer/SDKs/MacOSX10.5u.sdk -bundle -multiply_defined suppress -lc $(LDFLAGS)
+EXT = dylib
+CC = clang
+PLUGIN_CFLAGS = -Wall -Wno-unused-variable -Wno-self-assign -I. -Iinclude -O3 -fomit-frame-pointer -funroll-loops -DFFTW3 -arch x86_64 -ffast-math -msse -fno-common $(CFLAGS)
+PLUGIN_LDFLAGS = -arch x86_64 -dynamiclib $(LDFLAGS)
 BUILD_PLUGINS = $(PLUGINS) $(FFT_PLUGINS)
 RT =
 else
@@ -74,8 +74,8 @@ util: util/blo.o util/iir.o util/db.o util/rms.o util/pitchscale.o
 %.o: %.c
 	$(CC) $(PLUGIN_CFLAGS) $($(NAME)_CFLAGS) $*.c -c -o $@
 
-%.so: NAME = $(shell echo $@ | sed 's/plugins\/\(.*\)-swh.*/\1/')
-%.so: %.xml %.o %.ttl
+%.$(EXT): NAME = $(shell echo $@ | sed 's/plugins\/\(.*\)-swh.*/\1/')
+%.$(EXT): %.xml %.o %.ttl
 	$(CC) $*.o $(PLUGIN_LDFLAGS) $($(NAME)_LDFLAGS) -o $@
 	cp $@ $*-$(OS).$(EXT)
 	sed 's/@OS@/$(OS)/g' < `dirname $@`/manifest.ttl.in > `dirname $@`/manifest.ttl
