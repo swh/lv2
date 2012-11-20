@@ -13,6 +13,9 @@
       #define LP_INNER 0.96f
       #define LP_OUTER 0.983f
 
+      /* required for clang compilation */
+      void waveguide_nl_process_lin(waveguide_nl *wg, float in0, float in1, float *out0, float *out1);
+
       #define RUN_WG(n, junct_a, junct_b) waveguide_nl_process_lin(w[n], junct_a - out[n*2+1], junct_b - out[n*2], out+n*2, out+n*2+1)
     </code>
   </global>
