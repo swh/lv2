@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE ladspa SYSTEM "ladspa-swh.dtd">
+<?xml-stylesheet href="ladspa.css" type="text/css"?>
+
+<ladspa>
+  <global>
+    <meta name="maker" value="Bart Massey &lt;bart.massey@gmail.com&gt;"/>
+    <meta name="copyright" value="GPL"/>
+    <meta name="properties" value="HARD_RT_CAPABLE"/>
+    <code>
+      #include "ladspa-util.h"
+    </code>
+  </global>
+
+  <plugin label="ulaw" id="4702" class="DynamicsPlugin">
+    <name>&#956;-Law Compressor</name>
+    <p>Transforms the input signal according to the
+       <a href="http://en.wikipedia.org/wiki/M-law_algorithm">&#956;-law</a>
+       compression function, which increases the average
+       dynamic range of the signal while preserving the
+       peaks.</p>
+    <p>A &#956;-law compander pair is part of telephone
+       transmission in the United State and Japan; elsewhere
+       A-law companding is used.</p>
+    <callback event="run"><![CDATA[
+      /* float u = 255.0; */
+      float uloginv = 0.18033688011112; /* 1.0 / log(1.0 + u) */
+      unsigned long pos;
+      for (pos = 0; pos < sample_count; pos++) {
+          float s = input[pos];
+          float sabs = fabs(s);
+          if (s >= 0)
+              s =  uloginv * log(1.0 + 255.0 * sabs);
+          else
+              s = -uloginv * log(1.0 + 255.0 * sabs);
+          buffer_write(output[pos], s);
+      }
+    ]]></callback>
+
+    <port label="input" dir="input" type="audio">
+      <name>Input</name>
+    </port>
+
+    <port label="output" dir="output" type="audio">
+      <name>Output</name>
+    </port>
+  </plugin>
+</ladspa>
