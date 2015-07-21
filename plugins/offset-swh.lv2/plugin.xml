@@ -60,7 +60,7 @@
       plugin_data->last_delay = (long)delay;
     ]]></callback>
 
-    <port label="delay" dir="input" type="control" hint="default_0">
+    <port label="delay" dir="input" type="control" hint="default_0,causes_artifacts">
       <name>delay (in samples)</name>
       <range min="-24000" max="24000" steps="48001"/>
     </port>
