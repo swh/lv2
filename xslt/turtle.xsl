@@ -46,7 +46,8 @@ swh:<xsl:value-of select="$pluglabel"/> a :Plugin ;
      :index <xsl:number value="position()-1" format="1" /> ;
      :symbol "<xsl:value-of select="@label"/>" ;<xsl:for-each select="range">
      :minimum <xsl:value-of select="@min"/> ;
-     :maximum <xsl:value-of select="@max"/> ;</xsl:for-each>
+     :maximum <xsl:value-of select="@max"/> ;
+     <xsl:if test="@steps">:rangeSteps <xsl:value-of select="@steps"/> ;</xsl:if></xsl:for-each>
      <xsl:if test="@label = 'latency'">
      :portProperty :reportsLatency ;</xsl:if>
      <xsl:if test="contains(@hint, 'default_0')">
