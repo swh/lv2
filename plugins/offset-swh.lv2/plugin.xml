@@ -36,15 +36,16 @@
 
     <callback event="run"><![CDATA[
 
-      long buffer_r_pos, i;
+      long buffer_r_pos, delay_delta, i;
 
       // subtract the plugin's latency (results in no audible offset)
       // and apply user-configured delay (results in the desired offset):
       buffer_r_pos = BUFFER_POS(buffer_w_pos - (MAX_OFFSET + (long)delay));
 
-      //for (i=0; i<delay_delta; i++) {
-      //  buffer[BUFFER_POS(buffer_w_pos + i)] = 0;
-      //}
+      delay_delta = (long)delay - last_delay;
+      for (; delay_delta<0; delay_delta++) {
+        buffer[BUFFER_POS(buffer_r_pos + delay_delta)] = 0.0f;
+      }
 
       for (i=0; i<sample_count; i++) {
         buffer[buffer_w_pos] = input[i];
