@@ -19,7 +19,7 @@
 
   <plugin label="offset" id="1916" class="UtilityPlugin">
     <name>Offset, sample-based</name>
-    <p>Intended to be used to eliminate offset between tracks (e.g. single sound source recorded from different distances).</p>
+    <p>Intended to be used to eliminate offset between tracks (e.g. single sound source simultaneously recorded from different distances).</p>
 
     <callback event="instantiate"><![CDATA[
       buffer = calloc(BUFFER_LEN, sizeof(LADSPA_Data));
@@ -41,10 +41,10 @@
 
       if (automatable > 0) {
 
-        // report the maximum offset to the host
+        // report the maximum offset as latency to the host
         *(plugin_data->latency) = MAX_OFFSET;
 
-        // and subtract the maximum offset by default
+        // and delay by the maximum offset by default
         // (results in no audible offset)
         buffer_r_pos = BUFFER_POS(buffer_w_pos - MAX_OFFSET);
 
@@ -61,7 +61,7 @@
         buffer_r_pos = BUFFER_POS(buffer_w_pos + MIN((long)offset, 0));
       }
 
-      // if the offset increases, zero the buffer accordingly
+      // if the offset increased, zero the buffer accordingly
       offset_delta = (long)offset - last_offset;
       for (; offset_delta>0; offset_delta--) {
         buffer[BUFFER_POS(buffer_r_pos - offset_delta)] = 0.0f;
@@ -89,7 +89,7 @@
 
     <port label="automatable" dir="input" type="control" hint="default_0,toggled">
       <name>automatable (possibly adds playback delay)</name>
-      <p>Turn this off if the offset does not change when rolling as the required buffer possibly adds a playback delay otherwise.</p>
+      <p>Turn this off if the offset does not change when rolling. Otherwise, the required buffer possibly adds a playback delay.</p>
     </port>
 
     <port label="input" dir="input" type="audio">
