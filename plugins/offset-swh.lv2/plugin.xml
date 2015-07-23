@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!DOCTYPE ladspa SYSTEM "ladspa-swh.dtd">
+<?xml-stylesheet href="ladspa.css" type="text/css"?>
+
+<ladspa>
+  <global>
+    <meta name="maker" value="Lukas Pirl &lt;lv2@lukas-pirl.de&gt;"/>
+    <meta name="copyright" value="GPL"/>
+    <meta name="properties" value="HARD_RT_CAPABLE"/>
+    <code><![CDATA[
+      #include "ladspa-util.h"
+      #define MAX_OFFSET 24000
+      #define BUFFER_LEN (MAX_OFFSET*2 + 1)
+      #define BUFFER_POS(a) (((a) + BUFFER_LEN) % BUFFER_LEN)
+      #define MAX(a, b) ((a) > (b) ? (a) : (b))
+      #define MIN(a, b) ((a) < (b) ? (a) : (b))
+    ]]></code>
+  </global>
+
+  <plugin label="offset" id="1916" class="UtilityPlugin">
+    <name>Offset, sample-based</name>
+    <p>Intended to be used to eliminate offset between tracks (e.g. single sound source simultaneously recorded from different distances).</p>
+
+    <callback event="instantiate"><![CDATA[
+      buffer = calloc(BUFFER_LEN, sizeof(LADSPA_Data));
+    ]]></callback>
+
+    <callback event="activate"><![CDATA[
+      memset(buffer, 0, BUFFER_LEN * sizeof(LADSPA_Data));
+      plugin_data->buffer_w_pos = 0;
+      plugin_data->last_offset = 0;
+    ]]></callback>
+
+    <callback event="cleanup"><![CDATA[
+      free(plugin_data->buffer);
+    ]]></callback>
+
+    <callback event="run"><![CDATA[
+
+      long buffer_r_pos, offset_delta, i;
+
+      if (automatable > 0) {
+
+        // report the maximum offset as latency to the host
+        *(plugin_data->latency) = MAX_OFFSET;
+
+        // and delay by the maximum offset by default
+        // (results in no audible offset)
+        buffer_r_pos = BUFFER_POS(buffer_w_pos - MAX_OFFSET);
+
+        // apply user-configured offset (results in the desired offset):
+        buffer_r_pos = BUFFER_POS(buffer_r_pos + (long)offset);
+
+      } else {
+        // report the currently required latency
+        // (the LV2 specification does not allow a negative latency)
+        *(plugin_data->latency) = MAX((long)offset, 0);
+
+        // if delaying, apply the configured offset
+        // (otherwise we rely on the host's latency compensation)
+        buffer_r_pos = BUFFER_POS(buffer_w_pos + MIN((long)offset, 0));
+      }
+
+      // if the offset increased, zero the buffer accordingly
+      offset_delta = (long)offset - last_offset;
+      for (; offset_delta>0; offset_delta--) {
+        buffer[BUFFER_POS(buffer_r_pos - offset_delta)] = 0.0f;
+      }
+
+      for (i=0; i<sample_count; i++) {
+        buffer[buffer_w_pos] = input[i];
+        buffer_w_pos = BUFFER_POS(buffer_w_pos + 1);
+
+        buffer_write(output[i], buffer[buffer_r_pos]);
+        buffer[buffer_r_pos] = 0.0f;
+        buffer_r_pos = BUFFER_POS(buffer_r_pos + 1);
+      }
+
+      plugin_data->buffer_w_pos = buffer_w_pos;
+      plugin_data->last_offset = (long)offset;
+
+    ]]></callback>
+
+    <port label="offset" dir="input" type="control" hint="default_0,causes_artifacts">
+      <name>offset (in samples)</name>
+      <p>If positive, input will be played earlier; if negative, it's a delay.</p>
+      <range min="-24000" max="24000" steps="48001"/>
+    </port>
+
+    <port label="automatable" dir="input" type="control" hint="default_0,toggled">
+      <name>automatable (possibly adds playback delay)</name>
+      <p>Turn this off if the offset does not change when rolling. Otherwise, the required buffer possibly adds a playback delay.</p>
+    </port>
+
+    <port label="input" dir="input" type="audio">
+      <name>Input</name>
+    </port>
+
+    <port label="output" dir="output" type="audio">
+      <name>Output</name>
+    </port>
+
+    <port label="latency" dir="output" type="control">
+      <name>latency</name>
+    </port>
+
+    <!-- this is a ring buffer -->
+    <instance-data label="buffer" type="LADSPA_Data *" />
+
+    <instance-data label="buffer_w_pos" type="long" />
+    <instance-data label="last_offset" type="long" />
+
+  </plugin>
+</ladspa>
