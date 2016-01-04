@@ -98,7 +98,7 @@ install:
 install-system: INSTALL_DIR_REALLY=$(INSTALL_DIR)
 install-system: all install-really
 
-install-user: INSTALL_DIR_REALLY=~/.lv2/bundles
+install-user: INSTALL_DIR_REALLY=~/.lv2
 install-user: all install-really
 
 install-really:
