@@ -7,6 +7,7 @@
 		<meta name="copyright" value="GPL"/>
 		<meta name="properties" value="HARD_RT_CAPABLE"/>
 		<code>
+			#include "string.h"
 			#include "util/pitchscale.h"
 
 			#define FRAME_LENGTH 4096
