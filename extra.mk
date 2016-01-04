@@ -19,8 +19,11 @@ sc3_LDFLAGS = util/db.o util/rms.o
 sc4_LDFLAGS = util/db.o util/rms.o
 se4_LDFLAGS = util/db.o util/rms.o
 
-mbeq_CFLAGS = `pkg-config fftw3f --cflags`
-mbeq_LDFLAGS = `pkg-config fftw3f --libs`
+fftw3_CFLAGS = `pkg-config fftw3f --cflags`
+fftw3_LDFLAGS = `pkg-config fftw3f --libs`
 
-pitch_scale_CFLAGS = `pkg-config fftw3f --cflags`
-pitch_scale_LDFLAGS = util/pitchscale.o `pkg-config fftw3f --libs`
+mbeq_CFLAGS = $(fftw3_CFLAGS)
+mbeq_LDFLAGS = $(fftw3_LDFLAGS)
+
+pitch_scale_CFLAGS = $(fftw3_CFLAGS)
+pitch_scale_LDFLAGS = util/pitchscale.o $(fftw3_LDFLAGS)
