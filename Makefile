@@ -61,6 +61,9 @@ all: util gverb $(OBJECTS)
 gverb: gverb/gverb.c gverb/gverbdsp.c gverb/gverb.o gverb/gverbdsp.o
 	(cd gverb && make -w CFLAGS="$(PLUGIN_CFLAGS)" LDFLAGS="$(PLUGIN_LDFLAGS)")
 
+util/pitchscale.o:
+	$(CC) $(PLUGIN_CFLAGS) $(fftw3_CFLAGS) $*.c -c -o $@
+
 util: util/blo.o util/iir.o util/db.o util/rms.o util/pitchscale.o
 
 %.c: OBJ = $(shell echo $@ | sed 's/\.c$$/-@OS@.$(EXT)/')
@@ -71,7 +74,7 @@ util: util/blo.o util/iir.o util/db.o util/rms.o util/pitchscale.o
 %.ttl: %.xml xslt/turtle.xsl
 	xsltproc -novalid xslt/turtle.xsl $*.xml | sed 's/\\/\\\\/g' > $@
 
-%.o: NAME = $(shell echo -n $@ | sed 's/plugins\/\(.*\)-swh.*/\1/')
+%.o: NAME = $(shell echo $@ | sed 's/plugins\/\(.*\)-swh.*/\1/')
 %.o: %.c
 	$(CC) $(PLUGIN_CFLAGS) $($(NAME)_CFLAGS) $*.c -c -o $@
 
