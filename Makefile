@@ -1,7 +1,7 @@
 PREFIX = /usr/local
 INSTALL_DIR = $(PREFIX)/lib/lv2
 
-VERSION = 1.0.15
+VERSION = 1.0.16
 
 PLUGINS = alias-swh.lv2 allpass-swh.lv2 am_pitchshift-swh.lv2 amp-swh.lv2 \
 analogue_osc-swh.lv2 bandpass_a_iir-swh.lv2 bandpass_iir-swh.lv2 \
