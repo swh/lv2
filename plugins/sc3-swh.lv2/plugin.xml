@@ -139,7 +139,7 @@
 
     <group label="sidechain" type="MonoGroup" sidechain-of="main_in"/>
 
-    <port label="sidechain" dir="input" type="audio" group="sidechain" role="centerChannel">
+    <port label="sidechain" dir="input" type="audio" group="sidechain" role="centerChannel" sidechain="true">
       <name>Sidechain</name>
     </port>
 

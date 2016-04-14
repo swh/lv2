@@ -124,7 +124,7 @@
       <range min="0" max="+24"/>
     </port>
 
-    <port label="sidechain" dir="input" type="audio">
+    <port label="sidechain" dir="input" type="audio" sidechain="true">
       <name>Sidechain</name>
     </port>
 
