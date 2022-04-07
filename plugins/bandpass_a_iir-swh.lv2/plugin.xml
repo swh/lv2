@@ -19,6 +19,8 @@
 
                 <callback event="instantiate">
                   sample_rate = s_rate;
+                  gt = init_iir_stage(IIR_STAGE_LOWPASS,1,3,2);
+                  iirf = init_iirf_t(gt);
                 </callback>
 		<callback event="run">
                   calc_2polebandpass(iirf, gt, center, width, sample_rate);
@@ -26,8 +28,6 @@
                 </callback>
 
                 <callback event="activate">                  
-                  plugin_data->gt = init_iir_stage(IIR_STAGE_LOWPASS,1,3,2);
-                  plugin_data->iirf = init_iirf_t(plugin_data->gt);
                   calc_2polebandpass(iirf, plugin_data->gt, *(plugin_data->center), *(plugin_data->width), sample_rate);
                 </callback>
 
