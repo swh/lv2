@@ -25,28 +25,24 @@
     
     <callback event="instantiate"><![CDATA[
       sample_rate = s_rate;
-    ]]></callback>
-    
-    <callback event="activate"><![CDATA[
       unsigned int minsize, size;
     
-      if (plugin_data->max_delay && *plugin_data->max_delay > 0)
-        minsize = sample_rate * *plugin_data->max_delay;
-      else if (plugin_data->delay_time)
-        minsize = sample_rate * *plugin_data->delay_time;
-      else
-        minsize = sample_rate; /* 1 second default */
+      minsize = sample_rate * 10; /* 10 seconds buffer */
     
       size = 1;
       while (size < minsize) size <<= 1;
     
       /* calloc sets the buffer to zero. */
-      plugin_data->buffer = calloc(size, sizeof(LADSPA_Data));
-      if (plugin_data->buffer)
-        plugin_data->buffer_mask = size - 1;
+      buffer = calloc(size, sizeof(LADSPA_Data));
+      if (buffer)
+        buffer_mask = size - 1;
       else
-        plugin_data->buffer_mask = 0;
-      plugin_data->write_phase = 0;
+        buffer_mask = 0;
+      write_phase = 0;
+    ]]></callback>
+
+    <callback event="activate"><![CDATA[
+      memset(plugin_data->buffer, 0, (plugin_data->buffer_mask + 1) * sizeof(LADSPA_Data));
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[
@@ -126,9 +122,7 @@
       <name>Max Delay (s)</name>
       <range min="0" max="10"/>
       <p>
-       Maximum delay. Used to set the delay buffer size upon activation. Cannot
-       be modulated. Note that if you do not connect to this port before
-       activation, it will default to 1 second. 
+       This has no effect and is left in for interface backwards compatibility.
       </p>
     </port>
 
@@ -153,28 +147,24 @@
     
     <callback event="instantiate"><![CDATA[
       sample_rate = s_rate;
-    ]]></callback>
-    
-    <callback event="activate"><![CDATA[
       unsigned int minsize, size;
     
-      if (plugin_data->max_delay && *plugin_data->max_delay > 0)
-        minsize = sample_rate * *plugin_data->max_delay;
-      else if (plugin_data->delay_time)
-        minsize = sample_rate * *plugin_data->delay_time;
-      else
-        minsize = sample_rate; /* 1 second default */
+      minsize = sample_rate * 10; /* 10 seconds buffer */
     
       size = 1;
       while (size < minsize) size <<= 1;
     
       /* calloc sets the buffer to zero. */
-      plugin_data->buffer = calloc(size, sizeof(LADSPA_Data));
-      if (plugin_data->buffer)
-        plugin_data->buffer_mask = size - 1;
+      buffer = calloc(size, sizeof(LADSPA_Data));
+      if (buffer)
+        buffer_mask = size - 1;
       else
-        plugin_data->buffer_mask = 0;
-      plugin_data->write_phase = 0;
+        buffer_mask = 0;
+      write_phase = 0;
+    ]]></callback>
+
+    <callback event="activate"><![CDATA[
+      memset(plugin_data->buffer, 0, (plugin_data->buffer_mask + 1) * sizeof(LADSPA_Data));
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[
@@ -242,9 +232,7 @@
       <name>Max Delay (s)</name>
       <range min="0" max="10"/>
       <p>
-       Maximum delay. Used to set the delay buffer size upon activation. Cannot
-       be modulated. Note that if you do not connect to this port before
-       activation, it will default to 1 second. 
+       This has no effect and is left in for interface backwards compatibility.
       </p>
     </port>
 
@@ -269,28 +257,24 @@
     
     <callback event="instantiate"><![CDATA[
       sample_rate = s_rate;
-    ]]></callback>
-    
-    <callback event="activate"><![CDATA[
       unsigned int minsize, size;
     
-      if (plugin_data->max_delay && *plugin_data->max_delay > 0)
-        minsize = sample_rate * *plugin_data->max_delay;
-      else if (plugin_data->delay_time)
-        minsize = sample_rate * *plugin_data->delay_time;
-      else
-        minsize = sample_rate; /* 1 second default */
+      minsize = sample_rate * 10; /* 10 seconds buffer */
     
       size = 1;
       while (size < minsize) size <<= 1;
     
       /* calloc sets the buffer to zero. */
-      plugin_data->buffer = calloc(size, sizeof(LADSPA_Data));
-      if (plugin_data->buffer)
-        plugin_data->buffer_mask = size - 1;
+      buffer = calloc(size, sizeof(LADSPA_Data));
+      if (buffer)
+        buffer_mask = size - 1;
       else
-        plugin_data->buffer_mask = 0;
-      plugin_data->write_phase = 0;
+        buffer_mask = 0;
+      write_phase = 0;
+    ]]></callback>
+
+    <callback event="activate"><![CDATA[
+      memset(plugin_data->buffer, 0, (plugin_data->buffer_mask + 1) * sizeof(LADSPA_Data));
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[
@@ -360,9 +344,7 @@
       <name>Max Delay (s)</name>
       <range min="0" max="10"/>
       <p>
-       Maximum delay. Used to set the delay buffer size upon activation. Cannot
-       be modulated. Note that if you do not connect to this port before
-       activation, it will default to 1 second. 
+       This has no effect and is left in for interface backwards compatibility.
       </p>
     </port>
 

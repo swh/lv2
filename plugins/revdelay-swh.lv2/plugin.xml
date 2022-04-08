@@ -32,15 +32,21 @@
       delay_samples = 0;
       last_delay_time = 0;
       write_phase = 0;
-    ]]></callback>
-    
-    <callback event="activate"><![CDATA[
+
       unsigned int size;
 
       size = sample_rate * 5 * 2; /* 5 second maximum */
         
       /* calloc sets the buffer to zero. */
-      plugin_data->buffer = calloc(size, sizeof(LADSPA_Data));
+      buffer = calloc(size, sizeof(LADSPA_Data));
+    ]]></callback>
+    
+    <callback event="activate"><![CDATA[
+      unsigned int size;
+
+      size = sample_rate * 5 * 2;
+        
+      memset(plugin_data->buffer, 0, size * sizeof(LADSPA_Data));
 
       plugin_data->buffer_size = size;
       plugin_data->write_phase = 0;
