@@ -62,6 +62,8 @@ static void activate<xsl:value-of select="$PluginLabel"/>(LV2_Handle instance)
   <xsl:for-each select="instance-data">  <xsl:value-of select="@type"/><xsl:text> </xsl:text><xsl:value-of select="@label"/> __attribute__ ((unused)) = plugin_data-><xsl:value-of select="@label"/>;
   </xsl:for-each>
 <xsl:value-of select="callback[@event='activate']" />
+  <xsl:text>  </xsl:text><xsl:for-each select="instance-data">plugin_data-><xsl:value-of select="@label"/> = <xsl:value-of select="@label"/>;
+  </xsl:for-each>
 }
 </xsl:if>
 
