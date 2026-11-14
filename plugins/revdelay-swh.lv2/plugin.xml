@@ -46,11 +46,11 @@
 
       size = sample_rate * 5 * 2;
         
-      memset(plugin_data->buffer, 0, size * sizeof(LADSPA_Data));
+      memset(buffer, 0, size * sizeof(LADSPA_Data));
 
-      plugin_data->buffer_size = size;
-      plugin_data->write_phase = 0;
-      plugin_data->delay_samples = 0;
+      buffer_size = size;
+      write_phase = 0;
+      delay_samples = 0;
     ]]></callback>
     
     <callback event="cleanup"><![CDATA[
@@ -106,6 +106,7 @@
       } else {
         float next_delay_samples = CALC_DELAY (delay_time);
         float delay_samples_slope = (next_delay_samples - delay_samples) / sample_count;
+        const float start_delay = delay_samples;
 
         for (i=0; i<sample_count; i++) {
           long read_phase, idelay_samples;
@@ -113,7 +114,10 @@
           LADSPA_Data insamp;
           insamp = in[i];
 
-          delay_samples += delay_samples_slope;
+          /* from the start of the ramp, not summed: a sum of a large negative slope overshoots below one sample, and
+           * delay2 and idelay_samples, the divisors below, reach 0 */
+          delay_samples = start_delay + delay_samples_slope * (i + 1);
+          if (delay_samples < 1.f) delay_samples = 1.f;
           delay2 = (long) (delay_samples * 2);
           write_phase = (write_phase + 1) % delay2;
 
