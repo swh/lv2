@@ -25,10 +25,10 @@
     ]]></callback>
     
     <callback event="activate"><![CDATA[
-      plugin_data->b = 0.f;
-      plugin_data->y = 0.f;
-      plugin_data->last_decay_time = 0.f;
-      plugin_data->first_time = 0;
+      b = 0.f;
+      y = 0.f;
+      last_decay_time = 0.f;
+      first_time = 0;
     ]]></callback>
     
     <callback event="run"><![CDATA[
