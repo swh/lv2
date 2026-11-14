@@ -27,8 +27,8 @@
 
     <callback event="activate"><![CDATA[
       memset(buffer, 0, BUFFER_LEN * sizeof(LADSPA_Data));
-      plugin_data->buffer_w_pos = 0;
-      plugin_data->last_offset = 0;
+      buffer_w_pos = 0;
+      last_offset = 0;
     ]]></callback>
 
     <callback event="cleanup"><![CDATA[
